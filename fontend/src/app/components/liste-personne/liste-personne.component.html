@@ -1,0 +1,175 @@
+<p-toast></p-toast>
+
+<div class="card">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <p-button
+        (click)="showDialog()"
+        label="New"
+        icon="pi pi-plus"
+        class="mr-2"
+      ></p-button>
+    </div>
+    <div class="p-toolbar-group-right">
+      <span class="p-input-icon-left mb-2 md:mb-0">
+        <i class="pi pi-search"></i>
+        <input
+          type="search"
+          pInputText
+          placeholder="Recherche par nom"
+          (input)="p.filterGlobal($any($event.target).value, 'contains')"
+        />
+      </span>
+    </div>
+  </p-toolbar>
+
+  <p-table
+    #p
+    [value]="listePersonne"
+    styleClass="p-datatable-striped"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [(first)]="first"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    [globalFilterFields]="['nom', 'age']"
+    class="center"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>N°</th>
+        <th pSortableColumn="nom">
+          Nom
+          <p-sortIcon></p-sortIcon>
+        </th>
+        <th>Prenoms</th>
+        <th>
+          Age
+          <p-columnFilter field="age" matchMode="equals" display="menu">
+            <ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="agesOptions"
+                (onChange)="filter($event.value)"
+                placeholder="Any"
+              >
+                <ng-template let-option pTemplate="item">
+                  <span [class]="'customer-badge status-' + option.value">{{
+                    option.label
+                  }}</span>
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+
+        <th>Departement</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-personne let-index="rowIndex">
+      <tr>
+        <td>{{ index + 1 }}</td>
+        <td>{{ personne.nom }}</td>
+        <td>{{ personne.prenoms }}</td>
+        <td>{{ personne.age }}</td>
+        <td>{{ personne.departement.designation}}</td>
+        <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success mr-2"
+            (click)="editPersonne(personne)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-warning"
+            (click)="deletePersonne(personne.id)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  header="Information Personne"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '20vw' }"
+  styleClass="p-fluid"
+  [draggable]="false"
+>
+  <ng-template pTemplate="content">
+    <br />
+    <div class="p-float-label">
+      <input
+        pInputText
+        id="nom"
+        [(ngModel)]="personne.nom"
+        required
+        autofocus
+        #nomInput="ngModel"
+        [ngClass]="{
+          'ng-dirty': nomInput.invalid && submitted
+        }"
+      />
+      <label htmlFor="nom">Nom</label>
+    </div>
+    <br />
+    <div class="p-float-label">
+      <input
+        type="texte"
+        pInputText
+        id="prenoms"
+        [(ngModel)]="personne.prenoms"
+        required="true"
+        autofocus
+        #prenomsInput="ngModel"
+        [ngClass]="{
+          'ng-dirty': prenomsInput.invalid && submitted
+        }"
+      />
+      <label htmlFor="prenoms">Premons</label>
+    </div>
+    <br />
+    <div class="p-float-label">
+      <input
+        pInputText
+        id="age"
+        [(ngModel)]="personne.age"
+        required
+        autofocus
+        #ageInput="ngModel"
+        type="number"
+        min="1"
+        [ngClass]="{
+          'ng-dirty': ageInput.invalid && submitted
+        }"
+      />
+      <label htmlFor="age">Age</label>
+    </div>
+    <br />
+    <div class="p-float-label">
+
+      <label htmlFor="departement">Departement</label>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      [label]="btnText"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="savePersonne(personne.id, personne)"
+    ></button>
+  </ng-template>
+</p-dialog>
