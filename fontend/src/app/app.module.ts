@@ -19,8 +19,7 @@ import { ToastModule } from 'primeng/toast';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TreeTableModule } from 'primeng/treetable';
 import { DropdownModule } from 'primeng/dropdown';
-
-
+import { TreeSelectModule } from 'primeng/treeselect';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -29,6 +28,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CorsInterceptor } from './cors.interceptor';
+import { TreeModule } from 'primeng/tree';
+
 
 @NgModule({
   declarations: [
@@ -57,7 +58,9 @@ import { CorsInterceptor } from './cors.interceptor';
     ToastModule,
     AutoCompleteModule,
     TreeTableModule,
-    DropdownModule
+    DropdownModule,
+    TreeModule,
+    TreeSelectModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },

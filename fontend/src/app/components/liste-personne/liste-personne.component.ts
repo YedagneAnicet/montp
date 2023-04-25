@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, } from 'primeng/api';
+import { Departement } from 'src/app/models/departement';
 import { Personne } from 'src/app/models/personne';
 import { DepartementService } from 'src/app/services/departement.service';
 import { PersonneService } from 'src/app/services/personne.service';
@@ -11,21 +12,21 @@ import { PersonneService } from 'src/app/services/personne.service';
   providers: [MessageService],
 })
 export class ListePersonneComponent implements OnInit {
-  first = 0; // attribuer lié à la pagination
-  rows = 10; // attribuer lié à la pagination
+  first = 0;
+  rows = 10;
 
   visible!: boolean;
   submitted!: boolean;
+
+  btnText !: any;
+
   personne : any;
   listePersonne: any;
-  btnText : any;
 
-  ListeDepartement : any;
-  SelectDepartement : any;
-  departement : any;
+  ListeDepartement !: [];
+  departement !: Departement;
 
   cols: any[] = [];
-  agesOptions!: any[];
 
   constructor(
     private _personneService: PersonneService,
@@ -35,6 +36,7 @@ export class ListePersonneComponent implements OnInit {
 
   ngOnInit() {
     this.getListePersonne();
+    this.getListeDepartement();
     this.cols = [
       {
         field: 'nom',
@@ -44,11 +46,6 @@ export class ListePersonneComponent implements OnInit {
         field: 'age',
         header: 'Age',
       },
-    ];
-
-    this.agesOptions = [
-      { label: 'Mineur', value: () => (this.personne.age < 18 ? 'mineur' : 'majeur') },
-      { label: 'Majeur', value: () => (this.personne.age >= 18 ? 'majeur' : 'mineur') },
     ];
   }
 
@@ -60,31 +57,17 @@ export class ListePersonneComponent implements OnInit {
     this.btnText = 'Ajouter';
   }
 
-  // getListeDepartement() {
-  //   this._departementService.getAllDerpartement().subscribe({
-  //     next: (reponse: any) => {
-  //       this.ListeDepartement = reponse;
-  //       console.log(reponse);
-  //     },
-  //     error: (error: any) => {
-  //       console.log(error);
-  //     },
-  //   });
-  // }
-
-  //     filterdepartement(event:any) {
-  //       let filtered: any[] = [];
-  //       let query = event.query;
-
-  //       for (let i = 0; i < this.ListeDepartement.length; i++) {
-  //           let departement = this.ListeDepartement[i];
-  //           if (departement.designation.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-  //               filtered.push(departement.designation);
-  //           }
-  //       }
-
-  //       this.ListeDepartement = filtered;
-  //   }
+  // Cette fonction permet de récupérer la liste des departements depuis le service
+  getListeDepartement() {
+    this._departementService.getDepartements().subscribe({
+      next: (reponse: any) => {
+        this.ListeDepartement = reponse;
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
 
 
   // Cette fonction permet de récupérer la liste des personnes depuis le service
@@ -123,7 +106,7 @@ export class ListePersonneComponent implements OnInit {
   savePersonne(id: number, personne: Personne) {
     this.submitted = true;
     // Vérification des champs du formulaire
-    if (!personne.nom || !personne.prenoms || !personne.age) {
+    if (!personne.nom || !personne.prenoms || !personne.age || !personne.departement) {
       this._messageService.add({
         key: 'tc',
         severity: 'error',

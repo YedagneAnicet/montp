@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DepartementService {
-  private baseUrl = 'http://localhost:8080';
+
+  private basrUrl = 'http://localhost:8080/departements'
 
   constructor(private _http : HttpClient) { }
 
-  getAllDerpartement() : Observable<any>{
-    const url = `${this.baseUrl}/getAllDepartement`;
-    return this._http.get(url);
+  getDepartements() : Observable<Object> {
+    return this._http.get(this.basrUrl);
   }
 }

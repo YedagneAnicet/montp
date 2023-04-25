@@ -22,7 +22,7 @@
       </span>
     </div>
   </p-toolbar>
-
+  <!-- Tableau affichant la liste des personnes  -->
   <p-table
     #p
     [value]="listePersonne"
@@ -43,30 +43,7 @@
           <p-sortIcon></p-sortIcon>
         </th>
         <th>Prenoms</th>
-        <th>
-          Age
-          <p-columnFilter field="age" matchMode="equals" display="menu">
-            <ng-template
-              pTemplate="filter"
-              let-value
-              let-filter="filterCallback"
-            >
-              <p-dropdown
-                [ngModel]="value"
-                [options]="agesOptions"
-                (onChange)="filter($event.value)"
-                placeholder="Any"
-              >
-                <ng-template let-option pTemplate="item">
-                  <span [class]="'customer-badge status-' + option.value">{{
-                    option.label
-                  }}</span>
-                </ng-template>
-              </p-dropdown>
-            </ng-template>
-          </p-columnFilter>
-        </th>
-
+        <th >Age</th>
         <th>Departement</th>
         <th>Actions</th>
       </tr>
@@ -77,7 +54,7 @@
         <td>{{ personne.nom }}</td>
         <td>{{ personne.prenoms }}</td>
         <td>{{ personne.age }}</td>
-        <td>{{ personne.departement.designation}}</td>
+        <td>{{ personne.departement.designation }}</td>
         <td>
           <button
             pButton
@@ -99,11 +76,12 @@
   </p-table>
 </div>
 
+<!-- Formulaire d'ajout ou de modification des infomartionq d'une personne -->
 <p-dialog
   header="Information Personne"
   [(visible)]="visible"
   [modal]="true"
-  [style]="{ width: '20vw' }"
+  [style]="{ width: '450px' }"
   styleClass="p-fluid"
   [draggable]="false"
 >
@@ -157,9 +135,16 @@
       <label htmlFor="age">Age</label>
     </div>
     <br />
-    <div class="p-float-label">
-
-      <label htmlFor="departement">Departement</label>
+    <div class="field">
+      <p-dropdown
+        [(ngModel)]="personne.departement"
+        [options]="ListeDepartement"
+        placeholder="Departement"
+      >
+        <ng-template let-departement pTemplate="item">
+          {{ departement.designation }}
+        </ng-template>
+      </p-dropdown>
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
