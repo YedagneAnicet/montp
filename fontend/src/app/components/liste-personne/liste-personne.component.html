@@ -43,7 +43,9 @@
           <p-sortIcon></p-sortIcon>
         </th>
         <th>Prenoms</th>
-        <th >Age</th>
+        <th >Age
+          <p-columnFilter type="numeric" field="age" display="menu"></p-columnFilter>
+        </th>
         <th>Departement</th>
         <th>Actions</th>
       </tr>
@@ -161,4 +163,4 @@
   </ng-template>
 </p-dialog>
 
-<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '250px'}"></p-confirmDialog>

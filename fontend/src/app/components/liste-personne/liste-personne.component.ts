@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {
   ConfirmEventType,
   ConfirmationService,
+  FilterMatchMode,
   MessageService,
+  PrimeNGConfig,
 } from 'primeng/api';
 import { Departement } from 'src/app/models/departement';
 import { Personne } from 'src/app/models/personne';
@@ -36,7 +38,8 @@ export class ListePersonneComponent implements OnInit {
     private _personneService: PersonneService,
     private _messageService: MessageService,
     private _departementService: DepartementService,
-    private _confirmationService: ConfirmationService
+    private _confirmationService: ConfirmationService,
+    private _config : PrimeNGConfig
   ) {}
 
   ngOnInit() {
@@ -51,6 +54,14 @@ export class ListePersonneComponent implements OnInit {
         field: 'age',
         header: 'Age',
       },
+      this._config.filterMatchModeOptions = {
+        text: [],
+        numeric: [
+            FilterMatchMode.LESS_THAN,
+            FilterMatchMode.GREATER_THAN,
+        ],
+        date: []
+    }
     ];
   }
 
@@ -96,8 +107,8 @@ export class ListePersonneComponent implements OnInit {
   // Cette fonction permet de supprimer une personne de la liste
   deletePersonne(id: number) {
     this._confirmationService.confirm({
-      message: 'Etes vous sur de supprimer la personne selectionnée ?',
-      header: 'Confirm',
+      message: 'Etes vous sûr de supprimer la personne selectionnée ?',
+      header: 'Confirmer',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this._personneService.deletePersonne(id).subscribe({
@@ -149,7 +160,7 @@ export class ListePersonneComponent implements OnInit {
       this._messageService.add({
         severity: 'error',
         summary: 'Erreur',
-        detail: 'Veuillez remplir tous les champs obligatoires.',
+        detail: 'Veuillez remplir tous les champs.',
         life: 5000,
       });
       return;
