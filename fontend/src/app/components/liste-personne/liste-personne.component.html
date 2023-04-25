@@ -81,7 +81,7 @@
   header="Information Personne"
   [(visible)]="visible"
   [modal]="true"
-  [style]="{ width: '450px' }"
+  [style]="{ width: '450px'}"
   styleClass="p-fluid"
   [draggable]="false"
 >
@@ -140,8 +140,10 @@
         [(ngModel)]="personne.departement"
         [options]="ListeDepartement"
         placeholder="Departement"
+        optionLabel="designation"
+        appendTo="body"
       >
-        <ng-template let-departement pTemplate="item">
+        <ng-template let-departement pTemplate="departemennt">
           {{ departement.designation }}
         </ng-template>
       </p-dropdown>
@@ -158,3 +160,5 @@
     ></button>
   </ng-template>
 </p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService, } from 'primeng/api';
+import {
+  ConfirmEventType,
+  ConfirmationService,
+  MessageService,
+} from 'primeng/api';
 import { Departement } from 'src/app/models/departement';
 import { Personne } from 'src/app/models/personne';
 import { DepartementService } from 'src/app/services/departement.service';
@@ -18,20 +22,21 @@ export class ListePersonneComponent implements OnInit {
   visible!: boolean;
   submitted!: boolean;
 
-  btnText !: any;
+  btnText!: any;
 
-  personne : any;
-  listePersonne: any;
+  personne!: Personne;
+  listePersonne!: Personne[];
 
-  ListeDepartement !: [];
-  departement !: Departement;
+  ListeDepartement!: Departement[];
+  departement!: Departement;
 
   cols: any[] = [];
 
   constructor(
     private _personneService: PersonneService,
     private _messageService: MessageService,
-    private _departementService : DepartementService
+    private _departementService: DepartementService,
+    private _confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -69,13 +74,11 @@ export class ListePersonneComponent implements OnInit {
     });
   }
 
-
   // Cette fonction permet de récupérer la liste des personnes depuis le service
   getListePersonne() {
     this._personneService.getPersonnes().subscribe({
       next: (reponse: any) => {
         this.listePersonne = reponse;
-        console.log(reponse);
       },
       error: (error: any) => {
         console.log(error);
@@ -92,27 +95,62 @@ export class ListePersonneComponent implements OnInit {
 
   // Cette fonction permet de supprimer une personne de la liste
   deletePersonne(id: number) {
-    this._personneService.deletePersonne(id).subscribe({
-      next: (reponse: any) => {
-        this.getListePersonne();
+    this._confirmationService.confirm({
+      message: 'Etes vous sur de supprimer la personne selectionnée ?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this._personneService.deletePersonne(id).subscribe({
+          complete: () => {
+            this.getListePersonne();
+            this._messageService.add({
+              severity: 'error',
+              summary: 'success',
+              detail: 'personne supprimée.',
+              life: 5000,
+            });
+          },
+          error: (error: any) => {
+            console.log(error);
+          },
+        });
       },
-      error: (error: any) => {
-        console.log(error);
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this._messageService.add({
+              severity: 'error',
+              summary: 'Rejet',
+              detail: 'vous avez rejecté la suppression',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this._messageService.add({
+              severity: 'warn',
+              summary: 'Annulation',
+              detail: 'vous avez annulé la suppression',
+            });
+            break;
+        }
       },
     });
   }
 
   // Cette fonction permet d'ajouter ou de modifier une personne
-  savePersonne(id: number, personne: Personne) {
+  savePersonne(id: any, personne: Personne) {
     this.submitted = true;
     // Vérification des champs du formulaire
-    if (!personne.nom || !personne.prenoms || !personne.age || !personne.departement) {
+    if (
+      !personne.nom ||
+      !personne.prenoms ||
+      !personne.age ||
+      !personne.departement
+    ) {
       this._messageService.add({
-        key: 'tc',
         severity: 'error',
         summary: 'Erreur',
         detail: 'Veuillez remplir tous les champs obligatoires.',
-        life: 3000,
+        life: 5000,
       });
       return;
     }
@@ -122,11 +160,10 @@ export class ListePersonneComponent implements OnInit {
         complete: () => {
           this.getListePersonne();
           this._messageService.add({
-            key: 'tc',
             severity: 'success',
             summary: 'Success',
             detail: 'Personne Ajoutée',
-            life: 3000,
+            life: 5000,
           });
         },
         error: (error: any) => {
@@ -134,18 +171,15 @@ export class ListePersonneComponent implements OnInit {
         },
       });
     } else {
-      const index = this.listePersonne.findIndex(
-        (p: { id: number }) => p.id === id
-      );
+      const index = this.listePersonne.findIndex((p) => p.id === id);
       this._personneService.updatePersonne(id, personne).subscribe({
         complete: () => {
           this.listePersonne[index] = personne;
           this._messageService.add({
-            key: 'tc',
             severity: 'success',
             summary: 'Success',
             detail: 'Personne modifiée',
-            life: 3000,
+            life: 5000,
           });
         },
         error: (error: any) => {

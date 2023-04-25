@@ -29,6 +29,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CorsInterceptor } from './cors.interceptor';
 import { TreeModule } from 'primeng/tree';
+import { ScrollerModule } from 'primeng/scroller';
+
 
 
 @NgModule({
@@ -61,6 +63,7 @@ import { TreeModule } from 'primeng/tree';
     DropdownModule,
     TreeModule,
     TreeSelectModule,
+    ScrollerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },
