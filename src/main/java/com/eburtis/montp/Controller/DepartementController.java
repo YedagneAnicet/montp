@@ -19,14 +19,6 @@ import java.util.List;
 public class DepartementController {
     @Autowired
     private DepartementService departementService;
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @PostConstruct
-    public void configureObjectMapper() {
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    }
-
     @GetMapping("getAll")
     public List<DepartementVo> findAll(){
         return departementService.findAll();
