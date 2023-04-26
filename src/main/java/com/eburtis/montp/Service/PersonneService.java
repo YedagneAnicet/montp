@@ -1,11 +1,11 @@
-package com.eburtis.montp.Infrastructure;
+package com.eburtis.montp.Service;
 
 import com.eburtis.montp.Application.DepartementVo;
 import com.eburtis.montp.Application.PersonneVo;
 import com.eburtis.montp.Domain.Departement;
-import com.eburtis.montp.Domain.DepartementRepository;
+import com.eburtis.montp.Repository.DepartementRepository;
 import com.eburtis.montp.Domain.Personne;
-import com.eburtis.montp.Domain.PersonneRepository;
+import com.eburtis.montp.Repository.PersonneRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

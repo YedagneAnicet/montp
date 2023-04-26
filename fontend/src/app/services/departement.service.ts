@@ -12,6 +12,6 @@ export class DepartementService {
   constructor(private _http : HttpClient) { }
 
   getDepartements() : Observable<Object> {
-    return this._http.get(this.basrUrl);
+    return this._http.get(this.basrUrl+"/getAll");
   }
 }

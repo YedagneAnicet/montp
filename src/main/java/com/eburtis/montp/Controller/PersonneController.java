@@ -1,8 +1,8 @@
-package com.eburtis.montp.Interfaces;
+package com.eburtis.montp.Controller;
 
 import com.eburtis.montp.Application.PersonneVo;
 
-import com.eburtis.montp.Infrastructure.PersonneService;
+import com.eburtis.montp.Service.PersonneService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.annotation.PostConstruct;
@@ -29,37 +29,31 @@ public class PersonneController {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
-    @PostMapping
-    public ResponseEntity<PersonneVo> create(@RequestBody PersonneVo personneVo) {
-        PersonneVo createdPersonne = personneService.create(personneVo);
-        return new ResponseEntity<>(createdPersonne, HttpStatus.CREATED);
+    @PostMapping("create")
+    public PersonneVo create(@RequestBody PersonneVo personneVo) {
+        return personneService.create(personneVo);
     }
 
-    @GetMapping
-    public ResponseEntity<List<PersonneVo>> findAll() {
-        List<PersonneVo> personnes = personneService.findAll();
-        return new ResponseEntity<>(personnes, HttpStatus.OK);
+    @GetMapping("getAll")
+    public List<PersonneVo> findAll() {
+        return personneService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("getById/{id}")
     public ResponseEntity<PersonneVo> findById(@PathVariable Long id) {
         Optional<PersonneVo> personneOptional = personneService.findById(id);
         return personneOptional.map(personneVo -> new ResponseEntity<>(personneVo, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PersonneVo> update(@PathVariable Long id, @RequestBody PersonneVo personneVo) {
+    @PutMapping("update/{id}")
+    public PersonneVo update(@PathVariable Long id, @RequestBody PersonneVo personneVo) {
         PersonneVo updatedPersonne = personneService.update(id, personneVo);
-        if (updatedPersonne != null) {
-            return new ResponseEntity<>(updatedPersonne, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return updatedPersonne;
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        personneService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @DeleteMapping("delete/{id}")
+    public void deleteById(@PathVariable Long id) {
+         personneService.deleteById(id);
     }
 }

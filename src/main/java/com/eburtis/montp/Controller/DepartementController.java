@@ -1,7 +1,7 @@
-package com.eburtis.montp.Interfaces;
+package com.eburtis.montp.Controller;
 
 import com.eburtis.montp.Application.DepartementVo;
-import com.eburtis.montp.Infrastructure.DepartementService;
+import com.eburtis.montp.Service.DepartementService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.annotation.PostConstruct;
@@ -27,9 +27,8 @@ public class DepartementController {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
-    @GetMapping
-    public ResponseEntity<List<DepartementVo>> findAll(){
-        List<DepartementVo> departement = departementService.findAll();
-        return new ResponseEntity<>(departement, HttpStatus.OK);
+    @GetMapping("getAll")
+    public List<DepartementVo> findAll(){
+        return departementService.findAll();
     }
 }
