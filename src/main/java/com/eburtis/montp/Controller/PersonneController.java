@@ -17,26 +17,26 @@ public class PersonneController {
     @Autowired
     private PersonneService personneService;
     @PostMapping("create")
-    public PersonneVo create(@RequestBody PersonneVo personneVo) {
-        return personneService.create(personneVo);
+    public PersonneVo creerPersonne(@RequestBody PersonneVo personneVo) {
+        return personneService.creerPersonne(personneVo);
     }
     @GetMapping("getAll")
-    public List<PersonneVo> findAll() {
-        return personneService.findAll();
+    public List<PersonneVo> listePersonnes() {
+        return personneService.listePersonnes();
     }
     @GetMapping("getById/{id}")
     public ResponseEntity<PersonneVo> findById(@PathVariable Long id) {
-        Optional<PersonneVo> personneOptional = personneService.findById(id);
+        Optional<PersonneVo> personneOptional = personneService.obtenirPersonne(id);
         return personneOptional.map(personneVo -> new ResponseEntity<>(personneVo, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PutMapping("update/{id}")
-    public PersonneVo update(@PathVariable Long id, @RequestBody PersonneVo personneVo) {
-        PersonneVo updatedPersonne = personneService.update(id, personneVo);
+    public PersonneVo modifierPersonne(@PathVariable Long id, @RequestBody PersonneVo personneVo) {
+        PersonneVo updatedPersonne = personneService.modifierPersonne(id, personneVo);
         return updatedPersonne;
     }
     @DeleteMapping("delete/{id}")
     public void deleteById(@PathVariable Long id) {
-         personneService.deleteById(id);
+         personneService.supprimerPersonne(id);
     }
 }

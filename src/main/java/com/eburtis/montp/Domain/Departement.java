@@ -25,7 +25,8 @@ public class Departement {
 
     public Departement() {}
 
-    public Departement(String code, String designation) {
+    public Departement(Long id,String code, String designation) {
+        this.id = id;
         this.code = code;
         this.designation = designation;
     }

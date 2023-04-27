@@ -6,7 +6,6 @@ import com.eburtis.montp.Domain.Departement;
 import com.eburtis.montp.Repository.DepartementRepository;
 import com.eburtis.montp.Domain.Personne;
 import com.eburtis.montp.Repository.PersonneRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public class PersonneService {
     @Autowired
     private DepartementRepository departementRepository;
 
-    public PersonneVo create(PersonneVo personneVo) {
+    public PersonneVo creerPersonne(PersonneVo personneVo) {
         if (personneVo.getDepartement() == null || personneVo.getDepartement().getId() == null) {
             throw new IllegalArgumentException("Identifiant du département manquant");
         }
@@ -35,25 +34,17 @@ public class PersonneService {
         return new PersonneVo(savedPersonne, new DepartementVo(savedPersonne.getDepartement()));
     }
 
-    public PersonneVo getPersonneByIdWithDepartement(Long id) {
-        Personne personne = personneRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("La personne avec " + id + " est introuvable"));
-        Departement departement = departementRepository.findById(personne.getDepartement().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Département with id " + personne.getDepartement().getId() + " not found"));
-        return new PersonneVo(personne, new DepartementVo(departement));
-    }
-
-    public List<PersonneVo> findAll() {
+    public List<PersonneVo> listePersonnes() {
         List<Personne> personnes = personneRepository.findAll();
         return personnes.stream().map(p -> new PersonneVo(p, new DepartementVo(p.getDepartement()))).collect(Collectors.toList());
     }
 
-    public Optional<PersonneVo> findById(Long id) {
+    public Optional<PersonneVo> obtenirPersonne(Long id) {
         Optional<Personne> personneOptional = personneRepository.findById(id);
         return personneOptional.map(p -> new PersonneVo(p, new DepartementVo(p.getDepartement())));
     }
 
-    public PersonneVo update(Long id, PersonneVo personneVo) {
+    public PersonneVo modifierPersonne(Long id, PersonneVo personneVo) {
         Optional<Personne> personneOptional = personneRepository.findById(id);
         if (personneOptional.isPresent()) {
             Personne personne = personneOptional.get();
@@ -69,7 +60,7 @@ public class PersonneService {
         return null;
     }
 
-    public void deleteById(Long id) {
+    public void supprimerPersonne(Long id) {
         personneRepository.deleteById(id);
     }
 

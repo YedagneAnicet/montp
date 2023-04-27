@@ -14,7 +14,7 @@ public class DepartementService {
     @Autowired
     private DepartementRepository departementRepository;
 
-    public List<DepartementVo> findAll(){
+    public List<DepartementVo> listeDepartement(){
         List<Departement> departements = departementRepository.findAll();
         return departements.stream()
                 .map(departement -> {
