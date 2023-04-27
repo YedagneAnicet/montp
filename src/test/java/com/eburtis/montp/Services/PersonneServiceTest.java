@@ -78,7 +78,7 @@ public class PersonneServiceTest {
         when(personneRepository.findById(id)).thenReturn(Optional.of(personne));
 
         //appel de ma methode
-        Optional<PersonneVo> personneVo = personneService.findById(id);
+        Optional<PersonneVo> personneVo = personneService.obtenirPersonne(id);
         Assertions.assertNotNull(personneVo);
 
         //verification de la reponse
