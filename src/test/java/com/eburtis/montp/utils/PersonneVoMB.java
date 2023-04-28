@@ -45,6 +45,7 @@ public class PersonneVoMB {
         when(personneVo.getNom()).thenReturn(this.nom);
         when(personneVo.getPrenoms()).thenReturn(this.prenoms);
         when(personneVo.getAge()).thenReturn(this.age);
+        when(personneVo.getDepartement()).thenReturn(this.departement);
         return personneVo;
     }
 }

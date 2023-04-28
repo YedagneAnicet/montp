@@ -11,12 +11,12 @@ public class PersonneVo {
 
     public PersonneVo() {}
 
-    public PersonneVo(Personne personne, DepartementVo departementVo) {
+    public PersonneVo(Personne personne) {
         this.id = personne.getId();
         this.nom = personne.getNom();
         this.prenoms = personne.getPremons();
         this.age = personne.getAge();
-        this.departement = departementVo;
+        this.departement = new DepartementVo(personne.getDepartement());
     }
 
     public Long getId() {

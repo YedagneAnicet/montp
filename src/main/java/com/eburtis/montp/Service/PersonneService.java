@@ -31,17 +31,17 @@ public class PersonneService {
         }
         Personne personne = new Personne(null, personneVo.getNom(), personneVo.getPrenoms(), personneVo.getAge(), departement);
         Personne savedPersonne = personneRepository.save(personne);
-        return new PersonneVo(savedPersonne, new DepartementVo(savedPersonne.getDepartement()));
+        return new PersonneVo(savedPersonne);
     }
 
     public List<PersonneVo> listePersonnes() {
         List<Personne> personnes = personneRepository.findAll();
-        return personnes.stream().map(p -> new PersonneVo(p, new DepartementVo(p.getDepartement()))).collect(Collectors.toList());
+        return personnes.stream().map(PersonneVo::new).collect(Collectors.toList());
     }
 
     public Optional<PersonneVo> obtenirPersonne(Long id) {
         Optional<Personne> personneOptional = personneRepository.findById(id);
-        return personneOptional.map(p -> new PersonneVo(p, new DepartementVo(p.getDepartement())));
+        return personneOptional.map(PersonneVo::new);
     }
 
     public PersonneVo modifierPersonne(Long id, PersonneVo personneVo) {
@@ -55,7 +55,7 @@ public class PersonneService {
             personne.setAge(personneVo.getAge());
             personne.setDepartement(departement);
             Personne updatedPersonne = personneRepository.save(personne);
-            return new PersonneVo(updatedPersonne, new DepartementVo(updatedPersonne.getDepartement()));
+            return new PersonneVo(updatedPersonne);
         }
         return null;
     }
