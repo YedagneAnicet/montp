@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.data.util.Lazy.empty;
 
 @ExtendWith(MockitoExtension.class)
-class testPersonneService {
+class TestPersonneService {
     @Mock
     private PersonneRepository personneRepository;
     @Mock
