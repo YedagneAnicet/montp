@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.data.util.Lazy.empty;
 
 @ExtendWith(MockitoExtension.class)
-public class testPersonneService {
+class testPersonneService {
     @Mock
     private PersonneRepository personneRepository;
     @Mock
@@ -73,7 +73,7 @@ public class testPersonneService {
 
     @Test
     @DisplayName("test unitaire de la methode listePersonnes du service personne")
-    public void testListePersonnes(){
+    void testListePersonnes(){
         //GIVEN
         List<Personne> personnes = new ArrayList<>();
         personnes.add(yedagne);
@@ -91,7 +91,7 @@ public class testPersonneService {
     }
     @Test
     @DisplayName("test unitaire de la methode obtenirPersonne de personneService")
-    public void testObtenirPersonne(){
+    void testObtenirPersonne(){
         //GIVEN
         when(personneRepository.findById(personneId)).thenReturn(Optional.of(yedagne));
 
@@ -105,7 +105,7 @@ public class testPersonneService {
     }
     @Test
     @DisplayName("test unitaire de la methode de creation d'une personne de la couche personneService")
-    public void testCreerPersonne(){
+    void testCreerPersonne(){
         //GIVEN
         when(departementRepository.findById(departementId)).thenReturn(Optional.of(departement));
         when(personneRepository.save(Mockito.any(Personne.class))).thenReturn(yedagne);
@@ -119,7 +119,7 @@ public class testPersonneService {
     }
     @Test
     @DisplayName("test unitaire de la methode modifierPersonne de la couche service Personne")
-    public void testModifierPersonne(){
+    void testModifierPersonne(){
         //Given
         when(personneRepository.findById(personneId)).thenReturn(Optional.of(yedagne));
         when(departementRepository.findById(departementId)).thenReturn(Optional.of(departement));
@@ -133,7 +133,7 @@ public class testPersonneService {
     }
     @Test
     @DisplayName("test unitaire de la methode de suppression d'une personne de la couche personneservice")
-    public void testSupprimerPersonne(){
+    void testSupprimerPersonne(){
         //Given
         doNothing().when(personneRepository).deleteById(personneId);
 
