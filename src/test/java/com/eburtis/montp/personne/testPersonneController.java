@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @WebMvcTest(controllers = PersonneController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-public class testPersonneController {
+class testPersonneController {
     @Autowired
     private MockMvc mockMvc;
 
@@ -79,7 +79,7 @@ public class testPersonneController {
                 .build();
     }
     @Test
-    public void PersonneController_Create() throws Exception{
+    void PersonneController_Create() throws Exception{
         given(personneService.creerPersonne(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
 
     ResultActions reponse = mockMvc.perform(post("/personnes/create")
