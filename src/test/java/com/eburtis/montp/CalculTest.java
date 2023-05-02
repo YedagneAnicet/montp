@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @AutoConfigureMockMvc
 @Tag("CalculTest")
 @DisplayName("test unitaire pour la classe calcul")
-public class CalculTest {
+class CalculTest {
     private Calcul calcul;
 
     @BeforeEach
@@ -20,49 +20,48 @@ public class CalculTest {
 
     @Test
     @DisplayName("Test de l'addition")
-    public void testAdditionner() {
+    void testAdditionner() {
         float result = calcul.additionner(calcul.a, calcul.b);
         Assertions.assertEquals(8, result);
     }
 
     @Test
     @DisplayName("Test de la soustraction")
-    public void testSoustraire() {
+    void testSoustraire() {
         float result = calcul.soustraire(calcul.a, calcul.b);
         Assertions.assertEquals(2, result);
     }
 
     @Test
     @DisplayName("Test de la multiplication")
-    public void testMultiplier() {
+    void testMultiplier() {
         float result = calcul.multiplier(calcul.a, calcul.b);
         Assertions.assertEquals(15, result);
     }
 
     @Test
     @DisplayName("Test de la division")
-    public void testDiviser() throws Exception {
+    void testDiviser() throws Exception {
         float result = calcul.diviser(calcul.a, calcul.b);
         Assertions.assertEquals(1.6666666f, result, 0.00001f);
     }
 
     @Test
     @DisplayName("Test de la division par zéro")
-    public void testDiviserParZero() {
+    void testDiviserParZero() {
         Assertions.assertThrows(Exception.class, () -> calcul.diviser(calcul.a, 0));
     }
 
     @Test
-    @DisplayName("Test du carré")
-    public void testCarre() {
+    @DisplayName("Test du carr��")
+  c void testCarre() {
         float result = calcul.carre(calcul.a);
         Assertions.assertEquals(25, result);
     }
 
     @Test
     @DisplayName("Test de l'identité remarquable")
-    public void testIdentiteRemarquable() {
+ ic void testIdentiteRemarquable() {
         float result = calcul.identiteRemarquable(calcul.a, calcul.b);
         Assertions.assertEquals(64, result);
     }
-}
