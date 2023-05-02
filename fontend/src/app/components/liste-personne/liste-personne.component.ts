@@ -18,21 +18,15 @@ import { PersonneService } from 'src/app/services/personne.service';
   providers: [MessageService],
 })
 export class ListePersonneComponent implements OnInit {
-  first = 0;
-  rows = 10;
+  visible !: boolean;
+  submitted !: boolean;
 
-  visible!: boolean;
-  submitted!: boolean;
+  btnText !: any;
 
-  btnText!: any;
-
-  personne!: Personne;
-  listePersonne!: Personne[];
+  personne !: Personne;
+  listePersonne !: Personne[];
 
   ListeDepartement!: Departement[];
-  departement!: Departement;
-
-  cols: any[] = [];
 
   constructor(
     private _personneService: PersonneService,
@@ -45,24 +39,14 @@ export class ListePersonneComponent implements OnInit {
   ngOnInit() {
     this.getListePersonne();
     this.getListeDepartement();
-    this.cols = [
-      {
-        field: 'nom',
-        header: 'Nom',
-      },
-      {
-        field: 'age',
-        header: 'Age',
-      },
-      this._config.filterMatchModeOptions = {
-        text: [],
-        numeric: [
-            FilterMatchMode.LESS_THAN,
-            FilterMatchMode.GREATER_THAN,
-        ],
-        date: []
+    this._config.filterMatchModeOptions = {
+      text: [],
+      numeric: [
+        FilterMatchMode.LESS_THAN,
+        FilterMatchMode.GREATER_THAN,
+      ],
+      date: []
     }
-    ];
   }
 
   // Cette fonction permet d'afficher le formulaire de saisie de personne
@@ -88,10 +72,10 @@ export class ListePersonneComponent implements OnInit {
   // Cette fonction permet de récupérer la liste des personnes depuis le service
   getListePersonne() {
     this._personneService.getPersonnes().subscribe({
-      next: (reponse: any) => {
+      next: (reponse) => {
         this.listePersonne = reponse;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log(error);
       },
     });
@@ -151,11 +135,7 @@ export class ListePersonneComponent implements OnInit {
   savePersonne(id: any, personne: Personne) {
     this.submitted = true;
     // Vérification des champs du formulaire
-    if (
-      !personne.nom ||
-      !personne.prenoms ||
-      !personne.age ||
-      !personne.departement
+    if (!personne.nom || !personne.prenoms || !personne.age || !personne.departement
     ) {
       this._messageService.add({
         severity: 'error',

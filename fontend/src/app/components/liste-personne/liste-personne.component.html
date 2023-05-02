@@ -16,7 +16,7 @@
         <input
           type="search"
           pInputText
-          placeholder="Recherche par nom"
+          placeholder="Recherche"
           (input)="p.filterGlobal($any($event.target).value, 'contains')"
         />
       </span>
@@ -28,11 +28,10 @@
     [value]="listePersonne"
     styleClass="p-datatable-striped"
     [paginator]="true"
-    [rows]="10"
+    [rows]="5"
     [showCurrentPageReport]="true"
-    [(first)]="first"
-    [rowsPerPageOptions]="[10, 20, 30]"
-    [globalFilterFields]="['nom', 'age']"
+    [rowsPerPageOptions]="[5, 10, 15]"
+    [globalFilterFields]="['nom','prenoms']"
     class="center"
   >
     <ng-template pTemplate="header">

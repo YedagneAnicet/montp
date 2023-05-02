@@ -12,19 +12,19 @@ export class PersonneService {
 
   constructor(private _http : HttpClient) { }
 
-  getPersonnes() : Observable<Object> {
-    return this._http.get(this.basrUrl+"/getAll");
+  getPersonnes() : Observable<Personne[]> {
+    return this._http.get<Personne[]>(this.basrUrl+"/getAll");
   }
 
-  createPersonne(personne : Personne): Observable<Object> {
+  createPersonne(personne : Personne): Observable<Personne> {
     return this._http.post(this.basrUrl+"/create", personne);
   }
 
-  updatePersonne(id: number, personne: Personne): Observable<Object> {
+  updatePersonne(id: number, personne: Personne): Observable<Personne> {
     return this._http.put(this.basrUrl + '/update/' + id, personne);
   }
 
-  deletePersonne(id:number) : Observable<Object>{
+  deletePersonne(id:number) : Observable<Personne>{
     return this._http.delete(this.basrUrl + '/delete/' + id);
   }
 }

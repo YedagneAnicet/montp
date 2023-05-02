@@ -54,14 +54,15 @@ class CalculTest {
 
     @Test
     @DisplayName("Test du carr��")
-  c void testCarre() {
+    void testCarre() {
         float result = calcul.carre(calcul.a);
         Assertions.assertEquals(25, result);
     }
 
     @Test
     @DisplayName("Test de l'identité remarquable")
- ic void testIdentiteRemarquable() {
+    void testIdentiteRemarquable() {
         float result = calcul.identiteRemarquable(calcul.a, calcul.b);
         Assertions.assertEquals(64, result);
     }
+}
