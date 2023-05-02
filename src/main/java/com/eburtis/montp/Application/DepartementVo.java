@@ -2,6 +2,12 @@ package com.eburtis.montp.Application;
 
 import com.eburtis.montp.Domain.Departement;
 
+/**
+ * @author anicet yedagne https://github.com/YedagneAnicet
+ *
+ * cette classe est reprensente le VO de la Departement
+ *
+ * */
 public class DepartementVo {
     private Long id;
     private String code;

@@ -2,6 +2,12 @@ package com.eburtis.montp.Application;
 
 import com.eburtis.montp.Domain.Personne;
 
+/**
+ * @author anicet yedagne https://github.com/YedagneAnicet
+ *
+ * cette classe est reprensente le VO de Personne
+ *
+ * */
 public class PersonneVo {
     private Long id;
     private String nom;
