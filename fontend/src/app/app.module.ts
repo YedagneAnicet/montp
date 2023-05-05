@@ -30,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CorsInterceptor } from './cors.interceptor';
 import { TreeModule } from 'primeng/tree';
 import { ScrollerModule } from 'primeng/scroller';
+import { FirstNameFormatPipe } from './shared/pipe/first-name-format.pipe';
 
 
 
@@ -39,6 +40,7 @@ import { ScrollerModule } from 'primeng/scroller';
     HomeComponent,
     ListePersonneComponent,
     NavbarComponent,
+    FirstNameFormatPipe,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +66,9 @@ import { ScrollerModule } from 'primeng/scroller';
     TreeModule,
     TreeSelectModule,
     ScrollerModule
+  ],
+  exports:[
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },

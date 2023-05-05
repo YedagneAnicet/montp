@@ -28,7 +28,7 @@
     [value]="listePersonne"
     styleClass="p-datatable-striped"
     [paginator]="true"
-    [rows]="5"
+    [rows]="10"
     [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[5, 10, 15]"
     [globalFilterFields]="['nom','prenoms']"
@@ -52,10 +52,10 @@
     <ng-template pTemplate="body" let-personne let-index="rowIndex">
       <tr>
         <td>{{ index + 1 }}</td>
-        <td>{{ personne.nom }}</td>
-        <td>{{ personne.prenoms }}</td>
+        <td>{{ personne.nom | uppercase}}</td>
+        <td>{{ personne.prenoms | firstNameFormat }}</td>
         <td>{{ personne.age }}</td>
-        <td>{{ personne.departement.designation }}</td>
+        <td>{{ personne.departement.designation | uppercase }}</td>
         <td>
           <button
             pButton
